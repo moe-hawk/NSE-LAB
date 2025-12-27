@@ -1,0 +1,21 @@
+# Remote FortiGate bootstrap (FortiOS 7.2.2)
+# Adjust port names if your NIC mapping differs.
+
+execute formatlogdisk
+# device reboots; paste the rest AFTER it comes back
+
+config system interface
+  edit "port4"
+    set ip 10.200.3.1 255.255.255.0
+    set allowaccess ping https ssh http fgfm
+  next
+end
+
+config router static
+  edit 1
+    set device "port4"
+    set gateway 10.200.3.254
+  next
+end
+
+get router info routing-table all
